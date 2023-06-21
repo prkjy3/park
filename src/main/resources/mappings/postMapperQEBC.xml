@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoPostQEBC">
+	
+	<select id="postList" resultType="postDto">
+	SELECT * FROM (
+	  SELECT p.post_no, p.game_no, p.title, p.user_id, p.reg_date, p.readcount, COUNT(pl.game_no) AS like_count
+	  FROM post p
+	  LEFT JOIN post_like pl ON p.post_no = pl.post_no AND p.game_no = pl.game_no 
+	  WHERE p.game_no = #{param1} AND p.category_no = #{param2}
+	  GROUP BY p.post_no, p.game_no, p.title, p.user_id, p.reg_date, p.readcount
+	  ORDER BY p.reg_date DESC
+	) WHERE ROWNUM BETWEEN ((#{param3} - 1) * #{param4} + 1) AND (#{param3} * #{param4})
+
+	
+	</select>
+	
+	
+	<select id="searchList">
+	SELECT p.post_no, p.game_no, p.title, p.post_content, p.user_id, p.reg_date,
+	COUNT(pl.game_no) AS like_count,
+	SUM(CASE WHEN pl.user_id = #{param3} THEN 1 ELSE 0 END) AS is_liked
+	FROM post p
+	LEFT JOIN post_like pl ON p.post_id = pl.post_id AND p.game_no = pl.game_no
+	WHERE p.game_no = #{param4} AND p.category_no = #{param1} AND TITLE LIKE CONCAT('%', #{param2}, '%')
+	GROUP BY p.post_no, p.game_no, p.title, p.post_content, p.user_id, p.reg_date
+	</select>
+
+	<select id="noticeList" resultType="noticeDto">
+SELECT * FROM (
+    SELECT TITLE, NOTICE_NO, REG_DATE, READCOUNT
+    FROM NOTICE
+    WHERE GAME_NO = #{param1}
+    ORDER BY REG_DATE DESC
+)
+WHERE ROWNUM BETWEEN (#{param2} - 1) * #{param3} + 1 AND (#{param2} * #{param3})
+
+	</select>
+	
+	<select id="categoryList" resultType="categoryDto">
+	SELECT * FROM
+	POST_CATEGORY
+	ORDER BY CATEGORY_NO
+	</select>
+	
+
+	<select id="postComment" resultType="commentDto">
+	<![CDATA[   
+	
+	SELECT *	FROM ( SELECT *			
+			FROM	POST_COMMENT
+			WHERE GAME_NO = #{param1} AND POST_NO = #{param2}		
+ 				ORDER	BY REF_NO DESC 
+  					,	RE_STEP ASC	
+			  ) O					
+	WHERE ROWNUM BETWEEN (#{param3} - 1) * #{param4} + 1 
+	AND (#{param3} * #{param4})				
+	
+	
+	
+		 ]]>
+	</select>
+</mapper>
+<!-- 
+
+	예전에 썻던 쿼리 조금 빈약한데 페이징쿼리가 안됨
+	SELECT p.post_no, p.game_no, p.title, p.post_content, p.user_id, p.reg_date,
+	COUNT(pl.game_no) AS like_count,
+	SUM(CASE WHEN pl.user_id = #{user_id} THEN 1 ELSE 0 END) AS is_liked
+	FROM post p
+	LEFT JOIN post_like pl ON p.post_no = pl.post_no AND p.game_no = pl.game_no
+	WHERE p.game_no = #{game_no} AND p.category_no = #{category_no}
+	GROUP BY p.post_no, p.game_no, p.title, p.post_content, p.user_id, p.reg_date
+	ORDER BY p.reg_date
+
+
+
+ -->

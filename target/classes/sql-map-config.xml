@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org.//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+	<typeAlias type="com.v12.project.UserDTO" 
+		alias="userDto"></typeAlias>
+		<typeAlias type="com.v12.project.NoticeDTO" alias="noticeDto" />
+		<typeAlias type="com.v12.project.NoticeImageDTO" alias="noticeImageDto" />
+		<typeAlias type="com.v12.project.PostDTO" alias="postDto" />
+		<typeAlias type="com.v12.project.CommentDTO" alias="commentDto" />
+		<typeAlias type="com.v12.project.PostLikeDTO" alias="postLikeDto" />
+		<typeAlias type="com.v12.project.CategoryDTO" alias="categoryDto" />
+		<typeAlias type="com.v12.project.PostImageDTO" alias="postImgDto" />
+		
+		<typeAlias type="com.v12.project.GameDTO" alias="gameDto" />
+		<typeAlias type="com.v12.project.GameImageDTO" alias="gameimgDto" />
+		<typeAlias type="com.v12.project.PostCategoryDTO" alias="postCategoryDto" />
+	</typeAliases>
+	
+</configuration>

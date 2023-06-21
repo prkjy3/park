@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoNoticeQEBC">
+	
+	
+	<select id="noticeList" resultType="noticeDto">	<!--![CDATA[ 부등호 기혼지 확인하는거 안쓰면 부등호 기호로 인식되서 개꿀임   -->
+		<![CDATA[   
+		SELECT 
+			  NOTICE_NO,
+			  TITLE,
+			  CASE 
+	         WHEN TO_CHAR(REG_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD') 
+	         THEN TO_CHAR(REG_DATE, 'HH24:MI:SS') 
+	         ELSE TO_CHAR(REG_DATE, 'YY-MM-DD') 
+	       END AS REG_DATE,
+			  CONTENT,
+			  READCOUNT
+			FROM
+			  (SELECT O.*
+			     , ROWNUM RNUM
+			   FROM
+			     (SELECT *
+			      FROM NOTICE
+			      WHERE GAME_NO = #{param1}
+			      ORDER BY REG_DATE DESC
+			     ) O
+			  )
+			WHERE RNUM >= #{param2}
+			AND ROWNUM <= #{param3}
+        ]]>
+	</select>
+	
+	
+</mapper>
+		

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.v12.project.IDaoPostCategoryMEBC">
+  
+  
+  	<select id="selectPostCategory" resultType="postCategoryDto" >
+  		SELECT * FROM POST_CATEGORY WHERE CATEGORY_NO = #{category_no}
+  	</select>
+  	
+  	<insert id="insertPostCategory" >
+  	INSERT INTO POST_CATEGORY VALUES(#{category_no}, #{category_name})
+
+  	</insert>
+  	
+  	<update id="updatePostCategory">
+  		UPDATE POST_CATEGORY 
+  		SET CATEGORY_NAME = #{category_name}
+  						WHERE CATEGORY_NO = #{category_no}
+  	</update>
+  	
+  	<delete id="deletePostCategory">
+  		DELETE FROM POST_CATEGORY WHERE CATEGORY_NO = #{category_no}
+  	</delete>
+  	
+    <select id="selectPostCategoryList" resultType="postCategoryDto">
+  		<![CDATA[
+  		SELECT * 
+  		FROM ( SELECT ROWNUM RNUM
+  			, O.*
+  			FROM ( SELECT * 
+  					FROM POST_CATEGORY
+  					ORDER BY ROWNUM
+  					) O
+  				)
+  		WHERE RNUM >= ${param1}
+  		AND ROWNUM <= ${param2}
+  		]]>
+  		
+  	</select>
+  	
+  	  	<select id="getCount" resultType="int">
+  		SELECT COUNT(*) AS CNT FROM POST_CATEGORY
+  	</select>
+  	
+  	
+  </mapper>

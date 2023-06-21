@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoNoticeImageMEBC">
+  <insert id="insertNoticeImage">
+    INSERT INTO NOTICE_IMAGE (notice_no, game_no, notice_img_no, notice_img_name, notice_img_path)
+    VALUES (#{notice_no}, #{game_no}, #{notice_img_no}, #{notice_img_name}, #{notice_img_path})
+  </insert>
+  
+  <select id="selectImage" resultType="noticeImageDto">
+    SELECT * FROM NOTICE_IMAGE WHERE game_no = #{param1} AND notice_no = #{param2}
+  </select>
+ 
+	<select id="getMaxNoticeImageNo" resultType="int">
+        SELECT NVL(MAX(TO_NUMBER(NOTICE_IMG_NO)), 0) FROM NOTICE_IMAGE
+    </select>
+
+
+  <delete id="deleteNoticeImage">
+    DELETE FROM NOTICE_IMAGE WHERE game_no = #{param1} AND notice_no = #{param2} AND notice_img_no = #{param3}
+  </delete>
+</mapper>

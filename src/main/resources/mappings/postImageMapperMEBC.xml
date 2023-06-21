@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoPostImageMEBC">
+  <insert id="insertPostImage">
+    INSERT INTO POST_IMAGE (game_no, post_no, post_img_no, post_img_name, post_img_path)
+    VALUES (#{game_no}, #{post_no}, #{post_img_no}, #{post_img_name}, #{post_img_path})
+  </insert>
+
+	<select id="getMaxPostImageNo" resultType="int">
+        SELECT NVL(MAX(TO_NUMBER(POST_IMG_NO)), 0) FROM POST_IMAGE
+    </select>
+  <delete id="deletePostImage">
+    DELETE FROM POST_IMAGE WHERE game_no = #{game_no} AND post_no = #{post_no} AND post_img_no = #{post_img_no}
+  </delete>
+  
+  <select id="selectPostImage" resultType="postImgDto">
+  SELECT * FROM POST_IMAGE WHERE GAME_NO = #{param1} AND POST_NO =#{param2} 
+  </select>
+  
+</mapper>

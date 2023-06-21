@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoUser">
+
+	<select id="selectUser"  resultType="userDto">
+	SELECT * FROM USERS WHERE USER_ID = #{user_id}
+	</select>
+
+	<insert id="insertUser">  
+		INSERT INTO USERS  (USER_ID, NAME, EMAIL, PASSWORD, CREATED_AT, ROLE, USER_INTRODUCE)
+				   VALUES  (#{user_id},#{name},#{email},#{password},#{created_at},#{role},#{user_introduce})
+	</insert>
+
+	<update id="updateUser">
+		UPDATE USERS 
+		SET 	EMAIL 			= #{email},  
+				USER_INTRODUCE 	= #{user_introduce} 
+		WHERE	USER_ID 		= #{user_id}
+	</update>
+	<delete id="deleteUser">
+		DELETE FROM USERS WHERE USER_ID = #{user_id}
+	</delete>
+	
+
+</mapper>

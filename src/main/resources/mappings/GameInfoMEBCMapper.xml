@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.v12.project.IDaoGameMEBC">
+  
+  	<select id="selectGame" resultType="gameDto" >
+  		SELECT * FROM GAME WHERE GAME_NO = #{game_no}
+  	</select>
+  	
+  	<select id="getGameMaxNo" resultType="int" >
+  		SELECT NVL(MAX(GAME_NO), 0) FROM GAME 
+  	</select>
+  	
+  	<insert id="insertGame" parameterType="gameDto">
+  	INSERT INTO GAME VALUES(#{game_no}, #{game_name}, #{game_genre}, #{release_date}, #{game_url}, #{infomation})
+
+  	</insert>
+  	
+  	<update id="updateGame">
+  		UPDATE GAME 
+  		SET GAME_NAME = #{game_name},
+  							GAME_GENRE = #{game_genre},
+  							RELEASE_DATE = #{release_date},
+  							GAME_URL = #{game_url},
+  							INFOMATION = #{infomation}
+  						WHERE GAME_NO = #{game_no}
+  	</update>
+  	
+  	<delete id="deleteGame">
+  		DELETE FROM GAME WHERE GAME_NO = #{game_no}
+  	</delete>
+  	
+  	<select id="getCount" resultType="int">
+  		SELECT COUNT(*) AS CNT FROM GAME
+  	</select>
+  	
+  	
+  </mapper>

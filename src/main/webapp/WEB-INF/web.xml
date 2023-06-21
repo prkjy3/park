@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>ProjectV12</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <context-param><!-- 스프링 엠브이씨가 동작하는지 감시하는거, 동작을 할때 페레메터로 지정한root-context 객체를 만들고 그다음에 servlet-context객체를 만든다. -->
+	<param-name>contextConfigLocation</param-name>
+	<param-value>/WEB-INF/spring/root-context.xml
+		</param-value>
+</context-param>
+<listener>
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+
+
+<!--  Spring Security Filter -->
+<!--  
+<filter>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+-->
+<!-- 세션 시간설정 -->
+<session-config>
+    <session-timeout>30</session-timeout>
+</session-config>
+
+
+
+
+<filter><!-- 디스패쳐 서블릿으로 갈때 필터라는걸 걸쳐서 간다. 글자를 utf-8로 다 처리해라고 하는 뜻이다. 한글처리하기 위해 사용하는 것  -->
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>
+        org.springframework.web.filter.CharacterEncodingFilter
+    </filter-class>
+    <init-param>
+        <param-name>encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </init-param>
+</filter>
+
+<filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+
+<servlet>
+	<servlet-name>appServlet</servlet-name>
+	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	<init-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup><!-- 서블릿이 req를 왔을때 req에 해당되는 매핑되는 서블릿을 찾아보고 있으면 바로실행
+	, 없으면은 시작시켜서 느리게 된다. 0보다 큰값을 주게되면 톰캣이 올라갈때 해당되는 디스패쳐 서블릿을 같이올린다. -->
+</servlet>
+<servlet-mapping>
+	<servlet-name>appServlet</servlet-name>
+	<url-pattern>/</url-pattern><!--  이 마지막 슬러쉬 가 오면  디스패쳐서블렛을 실행시켜라 라는 뜻 -->
+</servlet-mapping>
+</web-app>

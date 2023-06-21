@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoNoticeMEBC">
+	
+	
+	<!-- 
+	public NoticeDTO selectNotice(int notice_No,int game_No);
+	
+	public int selectMaxNo();
+	
+	public void updateNotice(NoticeDTO noticeDto);
+	
+	public void updateNoticeReadCount();
+	
+	public void deleteNotice(int game_No , int notice_No);
+	
+	 -->
+	<!-- public int getNoticeCount(int game_no); -->
+	<select id="getNoticeCount" resultType="int">
+	SELECT COUNT(*) FROM NOTICE WHERE GAME_NO = #{param1} 
+	</select>
+	
+	<select id="selectNotice"  resultType="noticeDto">
+	SELECT * FROM NOTICE WHERE GAME_NO = #{param1} AND NOTICE_NO = #{param2}
+	</select>
+	<select id="selectMaxNo" resultType="int">
+	SELECT NVL(MAX(NOTICE_NO),0) FROM NOTICE WHERE GAME_NO = #{param1}
+	</select>
+	<update id="updateNotice">
+	UPDATE  NOTICE
+	   SET  TITLE    = #{title} ,
+	   		CONTENT  = #{content}
+	 WHERE  GAME_NO  = #{game_no}
+	 AND   NOTICE_NO = #{notice_no}
+	</update>
+	<update id="updateNoticeReadCount" parameterType="noticeDto">
+	UPDATE notice SET readcount = readcount + 1 WHERE game_no = #{param1} AND notice_no = #{param2}
+	
+	</update>
+	
+	<insert id="insertNotice">
+	INSERT INTO NOTICE (GAME_NO, NOTICE_NO, REG_DATE, TITLE, CONTENT) 
+				VALUES (#{game_no}, #{notice_no}, SYSDATE, #{title}, #{content})
+	</insert>
+	
+	<delete id="deleteNotice">
+	DELETE FROM NOTICE WHERE GAME_NO = #{param1} AND NOTICE_NO= #{param2} 
+	
+	</delete>
+	
+	
+	
+</mapper>

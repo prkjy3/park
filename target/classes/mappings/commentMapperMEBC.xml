@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoCommentMEBC">
+	
+	<!-- 
+	void insertComment(CommentDTO comment);
+	
+	void updateComment(CommentDTO comment);
+	
+	void deleteComment(int game_no, int post_no, int comment_no , String user_id);
+	
+	CommentDTO selectComment(int game_no , int post_no , int comment_no );
+	
+	int selectMaxNo(int game_no, int post_no);
+	 -->
+	<insert id="insertComment" parameterType="commentDto">
+	INSERT INTO POST_COMMENT (GAME_NO,POST_NO,COMMENT_NO,USER_ID,REF_NO,RE_LEVEL,RE_STEP,CONTENT,REG_DATE) 
+	VALUES(#{game_no},#{post_no},#{comment_no},#{user_id},#{ref_no},#{re_level},#{re_step},#{content},SYSDATE)
+	</insert>
+	<update id="updateComment">	
+	UPDATE POST_COMMENT
+		SET 		CONTENT = #{content}
+		where GAME_NO 		= #{game_no}
+		and	  POST_NO 		= #{post_no}
+		and	  COMMENT_NO 	= #{commnet_no}
+	</update>
+	
+	<delete id="deleteComment">
+	DELETE FROM POST_COMMENT
+	
+		WHERE 	GAME_NO 	= #{param1}
+		AND 	POST_NO	    = #{param2}
+		AND		COMMENT_NO  = #{param3}
+		
+	
+	
+	</delete>
+	
+	<update id="updateCommentStep">
+	UPDATE POST_COMMENT
+
+	SET RE_STEP = RE_STEP+1
+	
+	WHERE REF_NO = #{param1} AND RE_STEP > #{param2}
+	AND  GAME_NO = #{param3} AND POST_NO = #{param4}	
+	</update>
+	
+	<!-- 
+	sql	 = "update board set re_step=re_step+1";
+    sql += "where ref =? and re_step>?";
+	 -->
+	
+	<select id="selectComment" resultType="commentDto">
+	
+	SELECT * FROM POST_COMMENT WHERE GAME_NO = #{param1} AND POST_NO =#{param2} AND COMMENT_NO =#{param3}
+	
+	</select>
+	
+	<select id="selectMaxNo" resultType="int">
+		SELECT NVL(COUNT(*), 0) AS cnt
+		FROM POST_COMMENT
+		WHERE GAME_NO = #{param1} AND POST_NO = #{param2}
+	</select>
+	<select id="count" resultType="int">
+	select NVL(COUNT(*), 0) FROM POST_COMMENT WHERE GAME_NO = #{param1} AND POST_NO = #{param2} 
+	</select>
+	
+	
+	
+</mapper>

@@ -1,0 +1,72 @@
+/* 공지사항 테이블 */
+.notice {
+  width: 500px;
+  height: 300px;
+  border-collapse: collapse;
+}
+
+/* 제목 */
+#title{
+  width: 500px;
+  height: 30px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+/* 게시물 테이블 */
+.post {
+  width: 500px;
+  border-collapse: collapse;
+}
+
+/* 헤더 */
+.post-header {
+  height: 30px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+/* 게시물 내용 */
+.post-content {
+  height: 50px;
+}
+
+/* 버튼 */
+.btn {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post {
+  width: 45%;
+  margin-top: 20px;
+}
+
+#title {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-weight: bold;
+}
+
+
+
+
+

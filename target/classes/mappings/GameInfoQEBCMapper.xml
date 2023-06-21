@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.v12.project.IDaoGameQEBC">
+  	
+    <select id="gameList" resultType="gameDto">
+  		<![CDATA[
+  		SELECT * 
+  		FROM ( SELECT ROWNUM RNUM
+  			, O.*
+  			FROM ( SELECT * 
+  					FROM GAME
+  					ORDER BY ROWNUM
+  					) O
+  				)
+  		WHERE RNUM >= ${param1}
+  		AND ROWNUM <= ${param2}
+  		]]>
+  		
+  	</select>
+  	
+  	<select id="gameListNo" resultType="gameDto">
+  		<![CDATA[
+  		SELECT * 
+  		FROM ( SELECT ROWNUM RNUM
+  			, O.*
+  			FROM ( SELECT * 
+  					FROM GAME
+  					ORDER BY GAME_NO
+  					) O
+  				)
+  		WHERE RNUM >= ${param1}
+  		AND ROWNUM <= ${param2}
+  		]]>
+  		
+  	</select>
+  	
+  	<select id="gameListName" resultType="gameDto">
+  		<![CDATA[
+  		SELECT * 
+  		FROM ( SELECT ROWNUM RNUM
+  			, O.*
+  			FROM ( SELECT * 
+  					FROM GAME
+  					ORDER BY GAME_NAME
+  					) O
+  				)
+  		WHERE RNUM >= ${param1}
+  		AND ROWNUM <= ${param2}
+  		]]>
+  	</select>
+  	
+  	
+  	<select id="gameImageList" resultType="gameimgDto">
+  		<![CDATA[
+  		SELECT * 
+  		FROM ( SELECT ROWNUM RNUM
+  			, O.*
+  			FROM ( SELECT * 
+  					FROM GAME_IMAGE
+  					ORDER BY GAME_NO
+  					) O
+  				)
+  		WHERE RNUM >= ${param1}
+  		AND ROWNUM <= ${param2}
+  		]]>
+  	</select>
+  	
+  	
+  	<select id="gameListNameSearch" resultType="gameDto">
+  		<![CDATA[
+SELECT *
+FROM ( SELECT ROWNUM RNUM, O.*
+       FROM ( SELECT *
+              FROM GAME
+              WHERE GAME_NAME LIKE '%' || '${param3}' || '%'
+              ORDER BY GAME_NAME
+            ) O
+    )
+WHERE RNUM >= ${param1}
+  AND ROWNUM <= ${param2}
+  		]]>
+  	</select>
+  	
+  	
+  </mapper>

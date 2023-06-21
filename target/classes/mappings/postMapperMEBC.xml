@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoPostMEBC">
+	
+	
+	<!-- 
+	// 게시글 입력  , 게시글 댓글 입력 근데 두개 같은 dao 로 둬도 될듯?//
+	void insertPost(PostDTO post);
+	
+	// 게시글 댓글 입력할때 증가하는 re_level 을 측정(댓글, 대댓글에 관한 것들) 댓글 서비스에서 사용하게 만들기. //
+	void updateReStepPost(CommentDTO comment);
+	
+	//게시글 수정 , 댓글 수정 //
+	void updatePost(PostDTO post);
+	
+	//게시글 조회시 조회 수 증가 //
+	void updatePostReadCount(int game_no , int board_no);
+	
+	// 해당 포스트 삭제 //
+	void deletePost(int game_no, int board_no);
+	
+	// 게시판 번호 수중 가장 큰 값 찾아오기( 번호 자동으로 불러올려고 함) 한마디로 말하면 board_no 증가시킬려고 사용하는것
+	int selectMaxNum(int game_no, int board_no);
+	
+	// 게시글 찾기(상세조회나 업데이트, 삭제, 할때 사용할 sql 문)
+	PostDTO selectPost(int game_no, int board_no);
+	
+	// 게시글 개수 찾기
+	int countPost(int game_no);
+	
++	 -->
+	<!-- public int getNoticeCount(int game_no); -->
+<insert id="insertPost"><!-- 게시글 입력 -->
+INSERT INTO POST (GAME_NO , POST_NO, CATEGORY_NO, USER_ID , TITLE, REG_DATE, READCOUNT, POST_CONTENT) 
+            VALUES (#{game_no}, #{post_no}, #{category_no},#{user_id}, #{title}, sysdate, 0, #{post_content})
+</insert>
+
+<update id="updatePost">
+UPDATE POST 
+SET TITLE = #{title}, POST_CONTENT = #{content}, MOD_DATE = sysdate 
+WHERE GAME_NO = #{game_no} AND POST_NO = #{post_no}
+</update>
+
+<select id="selectMaxNo" resultType="int">
+SELECT NVL(MAX(POST_NO),0) FROM POST WHERE GAME_NO = #{param1} 
+</select>
+
+<update id="updatePostReadCount" parameterType="postDto">
+UPDATE POST SET READCOUNT = READCOUNT + 1 WHERE GAME_NO = #{param1} AND POST_NO = #{param2}
+</update>
+
+<delete id="deletePost">
+DELETE FROM POST WHERE GAME_NO = #{param1} AND POST_NO= #{param2} 
+</delete>
+
+<select id="countPost" resultType ="int">
+SELECT Count(*) FROM POST WHERE GAME_NO = #{param1} AND CATEGORY_NO = #{param2} 
+</select>
+
+<select id="selectPost" resultType="postDto">
+SELECT * FROM POST WHERE GAME_NO = #{param1} AND POST_NO = #{param2}
+</select>
+<delete id="deletePostUser">
+DELETE FROM POST WHERE USER_ID = #{param1}
+</delete>
+
+
+</mapper>

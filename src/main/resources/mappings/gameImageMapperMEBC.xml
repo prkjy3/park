@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.v12.project.IDaoGameImageMEBC">
+
+  <insert id="insertGameImage">
+    INSERT INTO GAME_IMAGE (GAME_NO, GAME_IMG_NO, GAME_IMG_NAME, GAME_IMG_PATH)
+    VALUES (#{game_no}, #{game_img_no}, #{game_img_name}, #{game_img_path})
+  </insert>
+  
+  <select id="selectGameImage" resultType="gameimgDto">
+    SELECT * FROM GAME_IMAGE WHERE GAME_NO = #{param1}
+  </select>
+
+	<select id="getMaxGameImageNo" resultType="int">
+        SELECT NVL(MAX(TO_NUMBER(GAME_IMG_NO)), 0) FROM GAME_IMAGE
+    </select>
+    
+    <update id="updateGameImage">
+  		UPDATE GAME_IMAGE 
+  		SET GAME_IMG_NO = #{game_img_no},
+  		GAME_IMG_NAME = #{game_img_name},
+  							GAME_IMG_PATH = #{game_img_path}
+  						WHERE GAME_NO = #{game_no}
+  	</update>
+
+
+  <delete id="deleteGameImage">
+    DELETE FROM GAME_IMAGE WHERE GAME_NO = #{param1}
+  </delete>
+</mapper>
